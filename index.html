@@ -3,26 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mod Menu Pro</title>
-  <!-- Load Notyf CSS từ jsDelivr -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Bebas+Neue&family=Big+Shoulders:opsz,wght@10..72,100..900&family=Bungee+Tint&family=Lilita+One&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rowdies:wght@300;400;700&family=Teko:wght@300..700&family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+  <meta name="msapplication-TileColor" content="#000">
+  <meta name="theme-color" content="#000">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
   <style>
     /* Nền trang bằng ảnh, phủ toàn bộ màn hình */
     body {
       margin: 0;
       padding: 0;
-      background: url("https://source.unsplash.com/1600x900/?game") no-repeat center center fixed;
+      background: url("https://i.imgur.com/XMw5FDk.jpeg") no-repeat center center fixed;
       background-size: cover;
       font-family: Arial, sans-serif;
+font-family: "Teko", sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
-    /* Khung chứa Mod Menu căn giữa theo cả 2 chiều */
+    /* Khung chứa Mod Menu với nền mờ không màu, border xanh đậm 1px và hiệu ứng blur */
     .mod-container {
       width: 320px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.2); /* nền trong suốt */
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid #fff; /* viền xanh đậm */
       padding: 20px;
       border-radius: 8px;
       text-align: center;
@@ -30,6 +38,7 @@
     }
     .mod-container h2 {
       margin-bottom: 1rem;
+      color: #000;
     }
     /* Kiểu cho các switch */
     .switch {
@@ -41,6 +50,7 @@
     .switch label {
       margin-left: 8px;
       cursor: pointer;
+      color: #fff; /* chữ màu trắng */
     }
     .switch input[type="checkbox"] {
       width: 40px;
@@ -218,16 +228,16 @@
       container.className = "mod-container";
 
       let title = document.createElement("h2");
-      title.innerText = "Mod Menu Pro";
+      title.innerText = "Hà Văn Huấn";
       container.appendChild(title);
 
       // Danh sách chức năng cho 5 switch
       let features = [
-        "Chức năng 1",
-        "Chức năng 2",
-        "Chức năng 3",
-        "Chức năng 4",
-        "Chức năng 5"
+        "DIPI MOD",
+        "FREE FIRE",
+        "AIMLOCK",
+        "AIMHEAD ANTIBAND",
+        "AIMBOT 35%"
       ];
 
       features.forEach((feature, index) => {
