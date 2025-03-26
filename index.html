@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mod Menu Pro</title>
+  <!-- Load Notyf CSS từ jsDelivr -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+  <style>
+    /* Nền trang bằng ảnh, phủ toàn bộ màn hình */
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("https://source.unsplash.com/1600x900/?game") no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    /* Khung chứa Mod Menu căn giữa theo cả 2 chiều */
+    .mod-container {
+      width: 320px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .mod-container h2 {
+      margin-bottom: 1rem;
+    }
+    /* Kiểu cho các switch */
+    .switch {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 10px 0;
+    }
+    .switch label {
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    .switch input[type="checkbox"] {
+      width: 40px;
+      height: 20px;
+      appearance: none;
+      background: #ccc;
+      outline: none;
+      border-radius: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .switch input[type="checkbox"]::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    .switch input[type="checkbox"]:checked {
+      background: #4cd964;
+    }
+    .switch input[type="checkbox"]:checked::before {
+      transform: translateX(20px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Load Notyf JS từ jsDelivr -->
+  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+  <script>
+    /***** Khởi tạo Notyf *****/
+    const notyf = new Notyf();
+
+    // Hàm hiển thị thông báo, đảm bảo không hiển thị đồng thời nhiều thông báo
+    function showNotification(type, message) {
+      notyf.dismissAll();
+      if (type === "success") {
+        notyf.success(message);
+      } else if (type === "error") {
+        notyf.error(message);
+      } else if (type === "warning") {
+        notyf.open({ type: 'warning', message });
+      }
+    }
+
+    /***** Các biến toàn cục để lưu interval của các coder *****/
+    let coder1Interval = null;
+    let coder2Interval = null;
+    let coder3Interval = null;
+    let coder4Interval = null;
+    let coder5Interval = null;
+
+    /***** Các đoạn mã coder được mã hóa bằng Base64 *****/
+    // Đoạn coder 1: sử dụng tham số sensitivity
+    const coder1Base64 = "Y29uc29sZS5sb2coJ0NvZGVyIDEgZXhlY3V0ZWQgd2l0aCBzb21lbnNpcml0eTogJyArIHNlbml0aXZpdHkpOw==";
+    // Đoạn coder 2: Mã giả lập in ra thông báo về Free Fire
+    const coder2Base64 = "Y29uc29sZS5sb2coJ0NvZGVyIDIgZXhlY3V0ZWQ6IFB1bGwgRnJlZSBGaXJlICBvcGVuZWQgJ2ZyZWUgZmlyZScpOw==";
+    // Đoạn coder 3: mã đơn giản
+    const coder3Base64 = "Y29uc29sZS5sb2coJ0NvZGVyIDMgZXhlY3V0ZWQnKTs=";
+    // Đoạn coder 4: mã đơn giản
+    const coder4Base64 = "Y29uc29sZS5sb2coJ0NvZGVyIDQgZXhlY3V0ZWQnKTs=";
+    // Đoạn coder 5: mã đơn giản
+    const coder5Base64 = "Y29uc29sZS5sb2coJ0NvZGVyIDUgZXhlY3V0ZWQnKTs=";
+
+    /***** Hàm chạy coder từ Base64; nếu có tham số (ví dụ sensitivity) sẽ truyền vào *****/
+    function runCoder(base64Code, param) {
+      let decodedCode = atob(base64Code);
+      // Nếu có tham số, tạo hàm với tham số 'sensitivity'
+      if (param !== undefined) {
+        let func = new Function("sensitivity", decodedCode);
+        func(param);
+      } else {
+        eval(decodedCode);
+      }
+    }
+
+    /***** Hàm cho Switch 1 *****/
+    function startCoder1(sensitivity) {
+      if (coder1Interval) {
+        clearInterval(coder1Interval);
+      }
+      coder1Interval = setInterval(() => {
+        runCoder(coder1Base64, sensitivity);
+      }, 5000);
+    }
+    function stopCoder1() {
+      if (coder1Interval) {
+        clearInterval(coder1Interval);
+        coder1Interval = null;
+      }
+    }
+
+    /***** Hàm cho Switch 2: Mở ứng dụng Free Fire trên iPhone *****/
+    function startCoder2(checkbox) {
+      if (!coder2Interval) {
+        // Hiển thị thông báo yêu cầu chấp nhận mở Free Fire
+        if (confirm("Bạn có muốn mở Free Fire trên thiết bị iPhone?")) {
+          showNotification("success", "Đang mở Free Fire...");
+          // Thực hiện chuyển hướng đến URL scheme của Free Fire (URL scheme cần được Free Fire hỗ trợ)
+          window.location.href = "freefire://";
+          // Chạy đoạn coder2 để log ra console (giả lập)
+          coder2Interval = setInterval(() => {
+            runCoder(coder2Base64);
+          }, 5000);
+        } else {
+          // Nếu không chấp nhận, bỏ chọn switch
+          checkbox.checked = false;
+        }
+      }
+    }
+    function stopCoder2() {
+      if (coder2Interval) {
+        clearInterval(coder2Interval);
+        coder2Interval = null;
+      }
+    }
+
+    /***** Hàm cho Switch 3 *****/
+    function startCoder3() {
+      if (!coder3Interval) {
+        coder3Interval = setInterval(() => {
+          runCoder(coder3Base64);
+        }, 5000);
+      }
+    }
+    function stopCoder3() {
+      if (coder3Interval) {
+        clearInterval(coder3Interval);
+        coder3Interval = null;
+      }
+    }
+
+    /***** Hàm cho Switch 4 *****/
+    function startCoder4() {
+      if (!coder4Interval) {
+        coder4Interval = setInterval(() => {
+          runCoder(coder4Base64);
+        }, 5000);
+      }
+    }
+    function stopCoder4() {
+      if (coder4Interval) {
+        clearInterval(coder4Interval);
+        coder4Interval = null;
+      }
+    }
+
+    /***** Hàm cho Switch 5 *****/
+    function startCoder5() {
+      if (!coder5Interval) {
+        coder5Interval = setInterval(() => {
+          runCoder(coder5Base64);
+        }, 5000);
+      }
+    }
+    function stopCoder5() {
+      if (coder5Interval) {
+        clearInterval(coder5Interval);
+        coder5Interval = null;
+      }
+    }
+
+    /***** Hàm tạo giao diện Mod Menu *****/
+    function createModMenu() {
+      clearTimeout(loginTimeout);
+      window.loginComplete = true;
+
+      // Tạo khung chứa menu
+      let container = document.createElement("div");
+      container.className = "mod-container";
+
+      let title = document.createElement("h2");
+      title.innerText = "Mod Menu Pro";
+      container.appendChild(title);
+
+      // Danh sách chức năng cho 5 switch
+      let features = [
+        "Chức năng 1",
+        "Chức năng 2",
+        "Chức năng 3",
+        "Chức năng 4",
+        "Chức năng 5"
+      ];
+
+      features.forEach((feature, index) => {
+        let switchDiv = document.createElement("div");
+        switchDiv.className = "switch";
+
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = "switch" + index;
+
+        let label = document.createElement("label");
+        label.htmlFor = "switch" + index;
+        label.innerText = feature;
+
+        switchDiv.appendChild(checkbox);
+        switchDiv.appendChild(label);
+        container.appendChild(switchDiv);
+
+        // Xử lý sự kiện cho từng switch
+        checkbox.addEventListener("change", function() {
+          if (this.checked) {
+            showNotification("success", feature + " đã được bật!");
+            // Gọi hàm tương ứng với từng switch
+            if (index === 0) {
+              let sensitivity = prompt("Nhập số smooth cho Coder 1:");
+              if (sensitivity !== null && sensitivity.trim() !== "") {
+                showNotification("success", "Nhập đẹp! Số smooth: " + sensitivity);
+                startCoder1(sensitivity);
+              } else {
+                showNotification("error", "Bạn chưa nhập số, chức năng sẽ bị tắt!");
+                this.checked = false;
+              }
+            } else if (index === 1) {
+              // Đối với Switch 2, truyền tham chiếu checkbox để nếu người dùng từ chối thì bỏ chọn
+              startCoder2(this);
+            } else if (index === 2) {
+              startCoder3();
+            } else if (index === 3) {
+              startCoder4();
+            } else if (index === 4) {
+              startCoder5();
+            }
+          } else {
+            showNotification("error", feature + " đã được tắt!");
+            // Dừng coder tương ứng khi tắt switch
+            if (index === 0) {
+              stopCoder1();
+            } else if (index === 1) {
+              stopCoder2();
+            } else if (index === 2) {
+              stopCoder3();
+            } else if (index === 3) {
+              stopCoder4();
+            } else if (index === 4) {
+              stopCoder5();
+            }
+          }
+        });
+      });
+
+      document.body.appendChild(container);
+    }
+
+    /***** Thời gian đăng nhập: nếu sau 60 giây chưa đăng nhập thành công, thoát mod *****/
+    let loginTimeout = setTimeout(() => {
+      if (!window.loginComplete) {
+        alert("Hết 60 giây, bạn đã bị thoát Mod!");
+        window.location.href = "https://example.com";
+      }
+    }, 60000);
+
+    /***** Hàm xử lý đăng nhập *****/
+    function login() {
+      let username = prompt("Nhập tài khoản:");
+      if (username === "havanhuan") {
+        let password = prompt("Nhập mật khẩu:");
+        if (password === "123") {
+          alert("Đăng nhập thành công! Chào mừng " + username);
+          localStorage.setItem("loggedIn", "true");
+          createModMenu();
+        } else {
+          alert("Sai mật khẩu!");
+          window.location.href = "https://example.com";
+        }
+      } else {
+        alert("Sai tài khoản!");
+        window.location.href = "https://example.com";
+      }
+    }
+
+    // Nếu thiết bị đã đăng nhập trước đó, tự động đăng nhập mà không cần prompt
+    if (localStorage.getItem("loggedIn") === "true") {
+      createModMenu();
+    } else {
+      login();
+    }
+  </script>
+</body>
+</html>
